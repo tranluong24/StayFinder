@@ -6,9 +6,9 @@ type Person = {
     name: string
 }
 
-const hoang:Person ={
+const huy:Person ={
     age:5,
-    name: "hoang"
+    name: "huy"
 }
 
 const people: Array<Person> = []
@@ -32,4 +32,4 @@ function add(a:number,b:number): number{
     return a+b;
 }
 
-console.log(hoang.age)
+console.log(huy.age)
