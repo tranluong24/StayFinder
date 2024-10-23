@@ -1,0 +1,13 @@
+//Cai day moi truong cho typescript
+npm -i g typescript -> cai toan cuc
+npm i ts-node
+ts-node --init
+run -> ts-node app.ts
+
+//Khoi tao frontend
+npm create vite@latest
+
+//Quy trinh
+B1: Backend setup
+B2: Frontend setup
+B3: MongoDB setup
