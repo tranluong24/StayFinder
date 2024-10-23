@@ -11,3 +11,7 @@ npm create vite@latest
 B1: Backend setup
 B2: Frontend setup
 B3: MongoDB setup
+- name: stayfinder123
+- pass: NO
+- URL connect: NO
+- Tao file .env de chua cac thong tin db
