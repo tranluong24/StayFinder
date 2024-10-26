@@ -15,3 +15,6 @@ B3: MongoDB setup
 - pass: NO
 - URL connect: NO
 - Tao file .env de chua cac thong tin db
+B4: Khoi tao bo cuc giao dien
+- cai dat TailwindCSS: npm i -D tailwindcss postcss autoprefixer
+- khoi tao TailwindCSS: npx tailwindcs init -p
