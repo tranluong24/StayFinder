@@ -1,3 +1,11 @@
+echo "# Nhom-32-Web-" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/LuongTran13/Nhom-32-Web-.git
+git push -u origin main
+
 //Cai day moi truong cho typescript
 npm -i g typescript -> cai toan cuc
 npm i ts-node
@@ -9,8 +17,10 @@ npm create vite@latest
 
 //Quy trinh
 B1: Backend setup
+- Nhớ install typescript ở global
 B2: Frontend setup
 B3: MongoDB setup
+- Chỉnh sửa thông tin trong credential manager để sửa thông tin đăng nhập github
 - name: stayfinder123
 - pass: NO
 - URL connect: NO
@@ -18,3 +28,13 @@ B3: MongoDB setup
 B4: Khoi tao bo cuc giao dien
 - cai dat TailwindCSS: npm i -D tailwindcss postcss autoprefixer
 - khoi tao TailwindCSS: npx tailwindcs init -p
+4.1: Khởi tạo layout
++ Header: tiêu đề web + nut sign in
++ Ở giữa là nội dung của trang web, các trang....
++ Footer: tiêu đề + các đường link
+
+!: Nho insall npm install react-router-dom
++ App.tsx chua cac cau truc chinh, route,layout, components con...
+
+Them: Header, Hero, Footer
+
