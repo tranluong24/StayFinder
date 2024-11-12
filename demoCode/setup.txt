@@ -57,7 +57,7 @@ Rejected: Đã hoàn thành nhưng bị lỗi.
 - app.use("/api/users", userRoutes)
 - kiem tra cac truogn thong tin dang ky express-validator
 5.2: Dang nhap api
-- 
+5.3 Xay dung giao dien dang ky dang nhap
 
 
 
