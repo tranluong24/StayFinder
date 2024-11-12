@@ -38,3 +38,29 @@ B4: Khoi tao bo cuc giao dien
 
 Them: Header, Hero, Footer
 
+B5: Đăng ky và xác thực
+5.1: Dang ky
+-Xác thực: Đăng ký -> mã hóa tài khoản và lưu vào db
+-> Tạo ra JWT để cho người dùng đăng nhập và lưu vào cookie
+- Xây dựng trang đăng ký: Tạo models user
+- Tao restfulAPI (trong routers)
+////////////////////
+Promise là gì?
+Promise trong JavaScript là một đối tượng đại diện cho một giá trị sẽ có trong tương lai. Đối tượng này giúp xử lý các tác vụ bất đồng bộ (chẳng hạn như tải dữ liệu từ server) một cách rõ ràng và hiệu quả hơn. Có ba trạng thái chính của một Promise:
+Pending: Trạng thái chờ, chưa hoàn thành.
+Fulfilled: Đã hoàn thành và trả về một kết quả thành công.
+Rejected: Đã hoàn thành nhưng bị lỗi.
+///////////////////////////////////////
+- npm i @types/bcryptjs tuc la dinh nghia kieu TS cho thu vien JS
+- Ma hoa mat khau truoc khi luu: bcryptjs, jsonwebtoken
+- jwt la token tam thoi xac dinh nguoi dung trong moi session dang nhap
+- app.use("/api/users", userRoutes)
+- kiem tra cac truogn thong tin dang ky express-validator
+5.2: Dang nhap api
+- 
+
+
+
+
+
+

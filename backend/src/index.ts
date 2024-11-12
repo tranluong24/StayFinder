@@ -2,7 +2,7 @@ import express, {Request, Response} from 'express'
 import cors from 'cors'
 import "dotenv/config"
 import mongose from 'mongoose'
-
+import userRoutes from './routes/users'
 
 mongose
 .connect(process.env.MONGO_CONNECTION_STRING as string) 
@@ -21,9 +21,8 @@ app.use(cors())
 
 const PORT = 3001
 
-app.get("/api/test", async(req: Request, res:  Response)=>{
-    res.json({message: "Hello from Express endpoint !"})
-})
+app.use("/api/users", userRoutes)
+
 
 app.listen(PORT, () =>{
     console.log("Listening on localhost:3001")
