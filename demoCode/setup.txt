@@ -58,9 +58,12 @@ Rejected: Đã hoàn thành nhưng bị lỗi.
 - kiem tra cac truogn thong tin dang ky express-validator
 5.2: Dang nhap api
 5.3 Xay dung giao dien dang ky dang nhap
+- Dang ky: su dung: npm i react-hook-form
+- cai dat thu vien react-query de truy van den server
+- Appcontext va Toast Notificatons
++ AppContext dung de chia se du lieu chung giua cac component ma k can truyen props
 
-
-
+5.3.1 Kiem tra USer login state
 
 
 
