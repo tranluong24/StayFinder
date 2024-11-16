@@ -62,8 +62,11 @@ Rejected: Đã hoàn thành nhưng bị lỗi.
 - cai dat thu vien react-query de truy van den server
 - Appcontext va Toast Notificatons
 + AppContext dung de chia se du lieu chung giua cac component ma k can truyen props
-
+- Vi chinh sach CORS (Cross-Origin Resource Sharing)  chan cac request khac nguon voi server nen can bat cors len de cho phep request tu front end
 5.3.1 Kiem tra USer login state
+
+B6: Tao chuc nang thanh toan bang Stripe, xac nhan dat phong
+6.1. Xac nhan dat phong:
 
 
 
