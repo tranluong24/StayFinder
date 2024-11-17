@@ -19,6 +19,15 @@ function App() {
             <p>Search Page</p>
           </Layout>
         }/>
+
+        <Route
+          path="/sign-in"
+          element={
+            <Layout>
+              <p>SignIn</p>
+            </Layout>
+          }
+        />
       </Routes>
     </Router>
   )
