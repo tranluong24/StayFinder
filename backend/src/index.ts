@@ -7,9 +7,11 @@ import authRoutes from './routes/auth'
 import cookieParser from 'cookie-parser'
 
 mongose
-.connect(process.env.MONGO_CONNECTION_STRING as string) 
+.connect(process.env.MONGODB_CONNECTION_STRING as string) 
 .then(()=>{
-    console.log('Connected MongoDB')
+    console.log('Connected Database: ',
+        process.env.MONGODB_CONNECTION_STRING
+    )
 })
 .catch((err)=>{
     console.log('Error: ',err)
