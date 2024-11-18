@@ -1,21 +1,21 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../api-client';
-import { useAppContext } from "../contexts/AppContexts";
+import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
-import Hero from "../components/Hero";
 
 export type RegisterFormData ={
     firstName: string,
-    lastName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
+    lastName: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
 }
 
 const Register = ()=> {
     const navigate = useNavigate();
     const {showToast} = useAppContext();
+    const queryClient = useQueryClient();
 
     const { 
         register,
@@ -25,8 +25,9 @@ const Register = ()=> {
     } = useForm<RegisterFormData>();
 
     const mutation = useMutation(apiClient.register, {
-        onSuccess: () => {
+        onSuccess: async () => {
             showToast({message: "Registration Success!", type :"SUCCESS"});
+            await queryClient.invalidateQueries("validateToken");
             navigate("/")
         },
         onError: (error: Error) => {
@@ -92,7 +93,7 @@ const Register = ()=> {
             <label className="text-gray-700 text-sm font-bold flex-1">
                 Confirm Password
                 <input
-                    type="confirmPassword"
+                    type="password"
                     className="border rounded w-full py-1 px-2 font-normal"
                     {...register("confirmPassword", {
                         validate: (val)=>{
@@ -110,7 +111,7 @@ const Register = ()=> {
             </label>
             <span>
                 <button type="submit"
-                className="bg-blue-600 text-while p-2 fonr-bold hover:bg-blue-500 text-xl">
+                className="bg-blue-600 text-white p-3 font-bold hover:bg-blue-500 text-xl rounded">
                     Create Account
                 </button>
             </span>

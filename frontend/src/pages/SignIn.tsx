@@ -14,7 +14,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // const location = useLocation();
+  const location = useLocation();
 
   const {
     register,
