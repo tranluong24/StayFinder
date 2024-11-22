@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Hero from "./Hero";
 
 type ToastProps = {
     message: string;

@@ -5,6 +5,7 @@ import mongose from 'mongoose'
 import userRoutes from './routes/users'
 import authRoutes from './routes/auth'
 import cookieParser from 'cookie-parser'
+import path from 'path'
 
 mongose
 .connect(process.env.MONGODB_CONNECTION_STRING as string) 
@@ -29,6 +30,8 @@ app.use(cors({
 }))
 
 const PORT = 3001
+//Thu muc dist frontend chua cac file static gui truc tiep den client khi duoc yeu cau
+app.use(express.static(path.join(__dirname, "../../frontend/dist")))
 
 app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
