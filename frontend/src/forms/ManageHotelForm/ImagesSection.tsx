@@ -1,5 +1,4 @@
 import { useFormContext } from "react-hook-form"
-import { validateToken } from "../../api-client";
 import { HotelFormData } from "./ManageHotelForm";
 
 const ImagesSection = () => {
@@ -36,9 +35,9 @@ const ImagesSection = () => {
                             className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 text-white">
                                 Delete
                             </button>
-                           <div/>
+                           </div>
                         ))}
-                    <div/>
+                    </div>
                 )}
 
                 <input type="file"
