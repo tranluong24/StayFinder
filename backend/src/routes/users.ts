@@ -36,7 +36,7 @@ router.post("/register", [
                 await user.save()
 
                 const token = jwt.sign({
-                    userId: user.id
+                    userId: user.id // la dang string cua user._id
                 },
                 process.env.JWT_SECRET_KEY as string,
                 {
