@@ -92,7 +92,7 @@ export const fetchMyHotelById = async (hotelId: string): Promise<HotelType> => {
     credentials: "include"
   })
 
-  if (response.ok){
+  if (!response.ok){
     throw new Error("Error fetching Hotels")
   }
 
