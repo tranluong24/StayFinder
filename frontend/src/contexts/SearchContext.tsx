@@ -1,5 +1,4 @@
-import { Children, useContext, useState } from "react";
-import { Search } from "react-router-dom";
+import React, { useContext, useState } from "react";
 
 type SearchContext = {
     destination: string;
