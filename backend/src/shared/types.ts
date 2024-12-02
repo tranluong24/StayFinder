@@ -14,3 +14,12 @@ export type HotelType = { // mô tả cấu trúc của đối tượng khách s
     imageUrls: string[],
     lastUpdated: Date;
 }
+
+export type HotelSearchResponse = {
+    data: HotelType[];
+    pagination: {
+        total: number;
+        page: number;
+        pages: number;
+    }
+}
