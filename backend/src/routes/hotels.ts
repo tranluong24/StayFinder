@@ -1,7 +1,12 @@
 import express, { Request, Response } from 'express';
 import Hotel from '../models/hotel';
-import { HotelSearchResponse } from '../shared/types';
+import { BookingType, HotelSearchResponse, PaymentIntentResponse } from '../shared/types';
 import { param, validationResult } from 'express-validator';
+import Stripe from "stripe"
+import verifyToken from '../middleware/auth';
+import { fetchMyHotelById } from '../../../frontend/src/api-client';
+
+const stripe = new Stripe(process.env.STRIPE_API_KEY as string)
 
 const router = express.Router()
 
@@ -67,6 +72,83 @@ router.get("/:id", [param("id").notEmpty().withMessage("Hotel ID is required")],
     }
 )
 
+router.post("/:hotelId/bookings/payment-intent", verifyToken, async(req: Request, res:Response) =>{
+    //1. Tong tien thanh toan
+    //2. hotelId
+    //3. userId
+    const {numberOfNights} = req.body
+    const hotelId = req.params.fetchMyHotelById
+    const hotel = await Hotel.findById(hotelId)
+    if(!hotel){
+        res.status(400).json({message:"Hotel not found"})
+    }else{
+        const totalCost = hotel.pricePerNight * numberOfNights
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: totalCost * 100,
+            currency: "gbp",//dvi tien te: 
+            metadata:{
+                hotelId,
+                userId: req.userId,
+            }
+        })
+
+        if(!paymentIntent.client_secret){
+            res.status(500).json({message: "Error creating payment intent"})   
+        }else{
+            const response = {
+                paymentIntentId: paymentIntent.id,
+                clientSecret: paymentIntent.client_secret.toString(),
+                totalCost
+            }
+            res.send(response)
+        }
+    }
+})
+
+router.post("/:hotelId/bookings", verifyToken, async(req: Request, res: Response)=>{
+
+    try{
+        const paymentIntentId = req.body.PaymentIntentId
+
+        const paymentIntent = await stripe.paymentIntents.retrieve(
+            paymentIntentId as string
+        )
+
+        if(!paymentIntent){
+            res.status(400).json({message: "payment intent not found"})
+        }else{
+            if(paymentIntent.metadata.hotelId !==req.params.hotelId ||
+                paymentIntent.metadata.userId !== req.userId){
+                    res.status(400).json({message: "Payment intent mismatch"})
+            }else{
+                if(paymentIntent.status !== "succeeded"){
+                    res.status(400).json({message: `Payment intent not succeed. Status: ${paymentIntent.status}`})
+                }else{
+                    const newBookings: BookingType = {
+                        ...req.body,
+                        userId: req.userId,
+                    }
+
+                    const hotel =  await Hotel.findOneAndUpdate({
+                        _id: req.params.hotelId,
+                        $push: {bookings: newBookings},
+                    })
+
+                    if(!hotel){
+                        res.status(400).json({message: "Hotel not found"})
+                    }else{
+                        await hotel.save()
+                        res.status(200).send();
+                    }
+                }
+            }
+            
+        }
+    }catch (err){
+        res.status(500).json({message: "Something went wrong"})
+    }
+})
 
 const constructSearchQuery = (queryParams: any) =>{
     let constructedQuery: any = {}
