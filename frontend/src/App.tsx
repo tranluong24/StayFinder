@@ -31,6 +31,15 @@ const App = () => {
             </Layout>
         }/>
 
+        <Route
+          path="/detail/:hotelId"
+          element={
+            <Layout>
+              <Detail />
+            </Layout>
+          }
+        />
+
         <Route path="/sign-in"
           element={
             <Layout>
