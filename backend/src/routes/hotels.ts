@@ -4,7 +4,6 @@ import { BookingType, HotelSearchResponse, PaymentIntentResponse } from '../shar
 import { param, validationResult } from 'express-validator';
 import Stripe from "stripe"
 import verifyToken from '../middleware/auth';
-import { fetchMyHotelById } from '../../../frontend/src/api-client';
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string)
 
@@ -54,6 +53,16 @@ router.get("/search", async (req: Request, res: Response) =>{
     }
 })
 
+router.get("/", async (req: Request, res: Response) => {
+    try {
+      const hotels = await Hotel.find().sort("-lastUpdated");
+      res.json(hotels);
+    } catch (error) {
+      console.log("error", error);
+      res.status(500).json({ message: "Error fetching hotels" });
+    }
+  });
+
 router.get("/:id", [param("id").notEmpty().withMessage("Hotel ID is required")],
     async(req: Request, res: Response) =>{
         const errors = validationResult(req);
@@ -77,8 +86,9 @@ router.post("/:hotelId/bookings/payment-intent", verifyToken, async(req: Request
     //2. hotelId
     //3. userId
     const {numberOfNights} = req.body
-    const hotelId = req.params.fetchMyHotelById
+    const hotelId = req.params.hotelId
     const hotel = await Hotel.findById(hotelId)
+    
     if(!hotel){
         res.status(400).json({message:"Hotel not found"})
     }else{
@@ -99,7 +109,7 @@ router.post("/:hotelId/bookings/payment-intent", verifyToken, async(req: Request
             const response = {
                 paymentIntentId: paymentIntent.id,
                 clientSecret: paymentIntent.client_secret.toString(),
-                totalCost
+                totalCost,
             }
             res.send(response)
         }
@@ -109,7 +119,7 @@ router.post("/:hotelId/bookings/payment-intent", verifyToken, async(req: Request
 router.post("/:hotelId/bookings", verifyToken, async(req: Request, res: Response)=>{
 
     try{
-        const paymentIntentId = req.body.PaymentIntentId
+        const paymentIntentId = req.body.paymentIntentId
 
         const paymentIntent = await stripe.paymentIntents.retrieve(
             paymentIntentId as string
@@ -125,15 +135,15 @@ router.post("/:hotelId/bookings", verifyToken, async(req: Request, res: Response
                 if(paymentIntent.status !== "succeeded"){
                     res.status(400).json({message: `Payment intent not succeed. Status: ${paymentIntent.status}`})
                 }else{
-                    const newBookings: BookingType = {
+                    const newBooking: BookingType = {
                         ...req.body,
                         userId: req.userId,
                     }
 
-                    const hotel =  await Hotel.findOneAndUpdate({
-                        _id: req.params.hotelId,
-                        $push: {bookings: newBookings},
-                    })
+                    const hotel =  await Hotel.findOneAndUpdate(
+                        {_id: req.params.hotelId},
+                        {$push: {bookings: newBooking},}
+                    )
 
                     if(!hotel){
                         res.status(400).json({message: "Hotel not found"})
