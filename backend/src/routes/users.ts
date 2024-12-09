@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import "dotenv/config"
 import { check, validationResult } from 'express-validator';
 import verifyToken from '../middleware/auth';
+import { UserType } from '../shared/types';
 
 const router = express.Router()
 
@@ -73,6 +74,55 @@ router.post("/register", [
                 message: "Something went wrong"
             })
         }
+    }
+})
+
+router.get("/", async(req: Request, res: Response) =>{
+    try{
+        const users = await User.find({role: {$ne: "admin"}})
+        res.json(users);
+    }catch(err){
+        res.status(400).json({
+            message: ""
+        })
+    }
+})
+
+router.delete("/:id", async(req: Request, res: Response) =>{
+    try{
+        const userId = req.params.id
+        const users = await User.findByIdAndDelete(
+            {_id: userId},
+        )
+        res.status(200).json({message: "Delete Successful"});
+    }catch(err){
+        res.status(400).json({
+            message: "Delete Failed"
+        })
+    }
+})
+
+router.put("/:id", async(req: Request, res: Response) =>{
+    try{
+        const userId = req.params.id
+        const updateuser: UserType= req.body
+        const user = await User.findByIdAndUpdate(
+            {_id: userId},
+            updateuser,
+            {new: true}
+        )
+
+        console.log(req.body)
+
+        if(!user){
+            res.status(404).json("user not found")
+        }else{
+            res.status(200).json({message: "Update Successful"});
+        }
+    }catch(err){
+        res.status(400).json({
+            message: "Update Failed"
+        })
     }
 })
 

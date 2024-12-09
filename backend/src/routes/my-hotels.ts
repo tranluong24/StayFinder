@@ -127,3 +127,23 @@ async function uploadImages(imageFiles: Express.Multer.File[]) {
     return imageUrls;
 }
 export default router
+
+router.delete("/:userId", async (req: Request, res: Response) =>{
+    try{
+        const userId = req.params.userId
+        console.log(userId)
+        const result = await Hotel.deleteMany({ userId: userId });
+        console.log(result)
+            // Kiểm tra kết quả
+        if (!result) {
+            res.status(200).json({ message: "Delete Successful"});
+        } else {
+            res.status(404).json({ message: "No hotels found to delete" });
+        }
+        // res.status(200).json({message: "Delete Successful"});
+    }catch(err){
+        res.status(400).json({
+            message: "Delete Failed"
+        })
+    }
+})

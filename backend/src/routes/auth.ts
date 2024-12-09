@@ -4,6 +4,7 @@ import User from '../models/user';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import verifyToken from '../middleware/auth';
+import { randomInt } from 'crypto';
 
 const router = express.Router()
 
@@ -62,10 +63,17 @@ router.post("/login",[
 )
 //Xac thuc cookie cho phien dang nhap hien tai
 //De biet la co dang dang nhap hay khong
-router.get("/validate-token", verifyToken, (req: Request, res: Response)=>{
-    res.status(200).send({
-        userId: req.userId
-    })
+router.get("/validate-token", verifyToken, async (req: Request, res: Response)=>{
+    const userId = req.userId
+    const user = await User.findById(userId)
+    if(!user){
+        res.status(404).send({message: "User not found !"})
+    }else{
+        res.status(200).send({
+            userId: userId,
+            role:user.role,
+        })
+    }
 })
 
 router.post("/logout", (req:Request, res: Response)=>{

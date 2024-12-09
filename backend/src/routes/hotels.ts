@@ -61,7 +61,7 @@ router.get("/", async (req: Request, res: Response) => {
       console.log("error", error);
       res.status(500).json({ message: "Error fetching hotels" });
     }
-  });
+});
 
 router.get("/:id", [param("id").notEmpty().withMessage("Hotel ID is required")],
     async(req: Request, res: Response) =>{

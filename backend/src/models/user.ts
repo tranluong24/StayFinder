@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true},
     firstName: {type:String, required: true},
     lastName: {type: String, required: true},
+    role: {type: String, required: true, enum: ["admin", "host", "user"]},
+    status: {type:String, required: true, enum: ["reject", "pending", "done"]}
 });
 
 userSchema.pre("save", async function (next) {

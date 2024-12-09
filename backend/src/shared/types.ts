@@ -27,7 +27,7 @@ export type HotelType = { // mô tả cấu trúc của đối tượng khách s
 }
 
 export type BookingType = {
-    _id: string;
+    _id:string;
     userId: string;
     firstName: string;
     lastName: string;
