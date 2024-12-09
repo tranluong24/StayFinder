@@ -14,6 +14,7 @@ const Detail = () => {
       enabled: !!hotelId,
     }
   );
+  const {data} = useQuery("fetchCurrentUser", apiClient.fetchCurrentUser)
 
   if (!hotel) {
     return <></>;
@@ -52,13 +53,16 @@ const Detail = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
         <div className="whitespace-pre-line">{hotel.description}</div>
+        {data?.role ==='user' &&(
         <div className="h-fit">
           <GuestInfoForm
             pricePerNight={hotel.pricePerNight}
             hotelId={hotel._id}
           />
         </div>
+        )} 
       </div>
+
     </div>
   );
 };

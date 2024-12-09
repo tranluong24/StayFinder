@@ -13,6 +13,8 @@ const MyHotels = () => {
     }
   );
 
+  const {data} = useQuery("fetchCurrentUser", apiClient.fetchCurrentUser)
+
   if (!hotelData) {
     return <span>No Hotels found</span>;
   }
@@ -21,12 +23,14 @@ const MyHotels = () => {
     <div className="space-y-5">
       <span className="flex justify-between">
         <h1 className="text-3xl font-bold">My Hotels</h1>
+        {data?.status === 'done' && (
         <Link
           to="/add-hotel"
           className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500"
         >
           Add Hotel
         </Link>
+        )}
       </span>
       <div className="grid grid-cols-1 gap-8">
         {hotelData.map((hotel) => (

@@ -3,7 +3,7 @@ import { useAppContext } from "../contexts/AppContext";
 import SignOutButton from "./SignOutButton";
 
 const Header = () => {
-  const { isLoggedIn } = useAppContext();
+  const { isLoggedIn, role } = useAppContext();
 
   return (
     <div className="bg-blue-800 py-6">
@@ -14,28 +14,28 @@ const Header = () => {
         <span className="flex space-x-2">
           {isLoggedIn ? (
             <>
-            
+              {role === 'user' && (
                 <Link
                   className="flex items-center text-white px-3 font-bold hover:bg-blue-600"
                   to="/my-bookings">
                   My Bookings
                 </Link>
-                
-              
-              
+                )
+              } 
+              {role === 'host' && (
               <Link
                 className="flex items-center text-white px-3 font-bold hover:bg-blue-600"
                 to="/my-hotels">
                 My Hotels
-              </Link>
-              
-              
+              </Link>)
+              }
+              {role === 'admin' && (
               <Link
                 className="flex items-center text-white px-3 font-bold hover:bg-blue-600"
                 to="/admin">
                   Admin
-              </Link>
-              
+              </Link>)
+              }
               <SignOutButton />
               
             </>

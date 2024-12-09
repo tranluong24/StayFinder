@@ -12,18 +12,18 @@ import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
 import Home from "./pages/Home";
 import MyBookings from "./pages/MyBookings";
-import AdminPage from "./pages/Admin";
+import AdminPage from './pages/Admin';
+
 
 
 const App = () => {
-  const { isLoggedIn } = useAppContext();
-
+  const { isLoggedIn, role } = useAppContext();
   return (
     <Router>
       <Routes>
         <Route path="/" element={
           <Layout>
-            <Home />
+            <Home/>
           </Layout>
         } />
 
@@ -59,49 +59,74 @@ const App = () => {
 
         {isLoggedIn && (
           <>
-            <Route
-              path="/hotel/:hotelId/booking"
-              element={
-                <Layout>
-                  <Booking />
-                </Layout>
-              } />
+            {role === "user" && (
+              <>
+              <Route
+                path="/hotel/:hotelId/booking" 
+                element={
+                  <Layout>
+                    <Booking />
+                  </Layout>
+                } />
+              <Route
+                path="/my-bookings"
+                element={
+                  <Layout>
+                    <MyBookings />
+                  </Layout>
+                }/>
+              </>
+            )}
 
-            <Route
-              path="/my-bookings"
-              element={
-                <Layout>
-                  <MyBookings />
-                </Layout>
-              } />
-
-            <Route
-              path="/add-hotel" element={
-                <Layout>
-                  <AddHotel />
-                </Layout>
-              } />
-            <Route
-              path="/my-hotels" element={
-                <Layout>
-                  <MyHotels />
-                </Layout>
-              } />
-            <Route
-              path="/edit-hotel/:hotelId"
-              element={
-                <Layout>
-                  <EditHotel />
-                </Layout>
-              }
-            />
-
-            <Route path="/admin" element={
-              <AdminPage />
-            } />
+            {role === "host" && (
+              <>
+              {/* <Route
+                path="/hotel/:hotelId/booking" 
+                element={
+                  <Layout>
+                    <Booking />
+                  </Layout>
+                } /> */}
+            
+              <Route
+                path="/add-hotel" element={
+                  <Layout>
+                    <AddHotel />
+                  </Layout>
+                } />
+            
+              <Route
+                path="/my-hotels" element={
+                  <Layout>
+                    <MyHotels />
+                  </Layout>
+                } />
+              <Route
+                path="/edit-hotel/:hotelId"
+                element={
+                  <Layout>
+                    <EditHotel />
+                  </Layout>
+                }
+              />
+              {/* <Route
+                path="/my-bookings"
+                element={
+                  <Layout>
+                    <MyBookings />
+                  </Layout>
+                }/> */}
+              </>
+            )}
+            {(role === 'admin' || role === "guest") && (   
+              <>           
+                <Route path="/admin" element={
+                  <AdminPage/>
+                } />
+              </>
+            )}
           </>
         )}
-
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
