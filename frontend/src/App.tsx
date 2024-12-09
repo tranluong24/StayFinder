@@ -11,6 +11,7 @@ import Search from "./pages/Search";
 import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
 import Home from "./pages/Home";
+import MyBookings from "./pages/MyBookings";
 
 
 const App = () => {
@@ -58,10 +59,18 @@ const App = () => {
         {isLoggedIn && (
           <>
             <Route
-              path="/hotel/:hotelId/booking" 
+              path="/hotel/:hotelId/booking"
               element={
                 <Layout>
                   <Booking />
+                </Layout>
+              } />
+
+            <Route
+              path="/my-bookings"
+              element={
+                <Layout>
+                  <MyBookings />
                 </Layout>
               } />
 
