@@ -241,3 +241,53 @@ export const fetchMyBookings = async (): Promise<HotelType[]> => {
 
   return response.json();
 };
+
+export const fetchUsers = async (): Promise<UserType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/users`);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+};
+
+export const deleteUser = async (id: string) => {
+  const response = await fetch(`${API_BASE_URL}/api/users/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete user");
+  }
+};
+
+export const deleteHotelByIdUser = async (id: string) => {
+  console.log(id)
+  const response = await fetch(`${API_BASE_URL}/api/my-hotels/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete user");
+  }
+};
+
+export const updateUserStatus = async(userData: UserType) =>{
+  const response = await fetch (
+    `${API_BASE_URL}/api/users/${userData._id}`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },    
+      body: JSON.stringify(userData),
+      credentials: "include"
+    }
+  )
+
+  console.log(userData)
+
+  if(!response.ok){
+    throw new Error ("Failed to update Hotel")
+  }
+
+  return response.json()
+}

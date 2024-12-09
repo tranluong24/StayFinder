@@ -12,6 +12,7 @@ import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
 import Home from "./pages/Home";
 import MyBookings from "./pages/MyBookings";
+import AdminPage from "./pages/Admin";
 
 
 const App = () => {
@@ -94,6 +95,10 @@ const App = () => {
                 </Layout>
               }
             />
+
+            <Route path="/admin" element={
+              <AdminPage />
+            } />
           </>
         )}
 

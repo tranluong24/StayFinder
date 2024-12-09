@@ -4,6 +4,8 @@ export type UserType = {
     password: string;
     firstName: string;
     lastName: string;
+    role: "admin" | "host" | "user"; // Chỉ cho phép các giá trị này
+    status: "reject" | "pending" | "done"; // Chỉ cho phép các giá trị này
 };
 
 export type HotelType = { // mô tả cấu trúc của đối tượng khách sạn
@@ -25,7 +27,7 @@ export type HotelType = { // mô tả cấu trúc của đối tượng khách s
 }
 
 export type BookingType = {
-    _id:string;
+    _id: string;
     userId: string;
     firstName: string;
     lastName: string;
