@@ -1,3 +1,8 @@
+export type DateBookedType = {
+    date: Date;
+    numberOfRoom: number;
+}
+
 export type UserType = {
     _id: string;
     email: string;
@@ -24,6 +29,8 @@ export type HotelType = { // mô tả cấu trúc của đối tượng khách s
     imageUrls: string[];
     lastUpdated: Date;
     bookings: BookingType[];
+    dateBooked: DateBookedType[];
+    numberOfRoom: number;
 }
 
 export type BookingType = {

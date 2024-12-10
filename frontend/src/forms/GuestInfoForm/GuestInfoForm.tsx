@@ -5,7 +5,6 @@ import { useAppContext } from "../../contexts/AppContext";
 import { useLocation, useNavigate} from "react-router-dom";
 import * as apiClient from "../../api-client";
 import { useQuery } from "react-query"
-import ManageHotelForm from '../ManageHotelForm/ManageHotelForm';
 
 type Props = {
   hotelId: string;
@@ -83,7 +82,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
     }
   };
 
-  const unavailableDates = dateBookedFull?.unavailable || [];
+  
 
   return (
     <div className="flex flex-col p-4 bg-blue-200 gap-4">

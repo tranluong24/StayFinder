@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import Hotel from '../models/hotel';
-import { BookingType, HotelSearchResponse, PaymentIntentResponse } from '../shared/types';
+import { BookingType, DateBookedType, HotelSearchResponse, PaymentIntentResponse } from '../shared/types';
 import { param, validationResult } from 'express-validator';
 import Stripe from "stripe"
 import verifyToken from '../middleware/auth';
@@ -140,14 +140,47 @@ router.post("/:hotelId/bookings", verifyToken, async(req: Request, res: Response
                         userId: req.userId,
                     }
 
-                    const hotel =  await Hotel.findOneAndUpdate(
-                        {_id: req.params.hotelId},
-                        {$push: {bookings: newBooking},}
-                    )
+                    const dateRange = [];  // Đây là mảng các ngày bạn muốn kiểm tra (từ checkIn đến checkOut)
+                    const checkInDate = new Date(req.body.checkIn);  // Ngày check-in
+                    const checkOutDate = new Date(req.body.checkOut);  // Ngày check-out
+                    
+                    // Tạo một mảng các ngày trong khoảng thời gian từ checkIn đến checkOut
+                    for (let currentDate = checkInDate; currentDate <= checkOutDate; currentDate.setDate(currentDate.getDate() + 1)) {
+                        dateRange.push(new Date(currentDate)); // Thêm từng ngày vào mảng dateRange
+                    }
+
+                    const dateBookedMap = new Map<string, { date: Date; numberOfRoom: number }>();
+
+                    const hotel = await Hotel.findById({
+                        _id: req.params.hotelId
+                    })
+
 
                     if(!hotel){
-                        res.status(400).json({message: "Hotel not found"})
+                        res.status(404).json({message: "Hotel not found"})
                     }else{
+                        hotel?.dateBooked.forEach((dateBooking) => {
+                            dateBookedMap.set(dateBooking.date.toISOString(), dateBooking);
+                        });
+
+                        dateRange.forEach((date) => {
+                            const dateKey = date.toISOString();
+                          
+                            if (dateBookedMap.has(dateKey)) {
+                              // Nếu ngày đã tồn tại, tăng số phòng lên 1
+                              dateBookedMap.get(dateKey)!.numberOfRoom += 1;
+                            } else {
+                              // Nếu ngày chưa tồn tại, thêm mới
+                              const newDateBooking = { date, numberOfRoom: 1 };
+                              dateBookedMap.set(dateKey, newDateBooking);
+                              hotel.dateBooked.push(newDateBooking);
+                            }
+                          });
+                        hotel.bookings.push(newBooking);
+                        // const result =  await Hotel.findOneAndUpdate(
+                        //     {_id: req.params.hotelId},
+                        //     {$push: {bookings: newBooking},}
+                        // )
                         await hotel.save()
                         res.status(200).send();
                     }
@@ -159,6 +192,47 @@ router.post("/:hotelId/bookings", verifyToken, async(req: Request, res: Response
         res.status(500).json({message: "Something went wrong"})
     }
 })
+// , verifyToken
+router.post("/validateNumberOfRoom", async (req: Request, res: Response) =>{
+    const {hotelId, checkIn, checkOut } = req.body
+    try{
+        const hotel = await Hotel.findById(hotelId)
+        
+        if(!hotel){
+            res.status(404).json({message: "Hotel not found !"})
+        }else{
+            const bookingDates = hotel.dateBooked.filter((dateBooking) => {
+                const bookingDate = new Date(dateBooking.date)
+                return bookingDate >= new Date(checkIn)  && bookingDate <= new Date(checkOut)
+            })
+
+            const unavailableDates: string[] = [];
+            const fullyBooked = bookingDates.filter((dateBooking) => {
+                return dateBooking.numberOfRoom >= hotel.numberOfRoom
+            })
+
+            fullyBooked.forEach((dateBooking) => {
+                unavailableDates.push(dateBooking.date.toISOString());
+            });
+
+            const fullyBookedStatus = fullyBooked.length > 0;
+
+            if(fullyBookedStatus){
+                const response = {
+                    available: false,
+                    message: "Fully Booked",
+                    unavailableDates
+                }
+                res.status(200).send(response)
+            }else{
+                res.status(200).json({available: true, message: "Room Available"})
+            }
+        }
+    }catch(err){
+        res.status(500).json({message: "Some thing went wrong"})
+    }
+})
+
 
 const constructSearchQuery = (queryParams: any) =>{
     let constructedQuery: any = {}
