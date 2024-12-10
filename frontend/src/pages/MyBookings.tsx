@@ -8,12 +8,12 @@ const MyBookings = () => {
   );
 
   if (!hotels || hotels.length === 0) {
-    return <span>No bookings found</span>;
+    return <span>Bạn chưa đặt phòng!</span>;
   }
 
   return (
     <div className="space-y-5">
-      <h1 className="text-3xl font-bold">My Bookings</h1>
+      <h1 className="text-3xl font-bold">Phòng đã đặt</h1>
       {hotels.map((hotel) => (
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] border border-slate-300 rounded-lg p-8 gap-5">
           <div className="lg:w-full lg:h-[250px]">
@@ -26,22 +26,22 @@ const MyBookings = () => {
             <div className="text-2xl font-bold">
               {hotel.name}
               <div className="text-xs font-normal">
-                {hotel.city}, {hotel.country}
+                {hotel.country}, {hotel.city}
               </div>
             </div>
             {hotel.bookings.map((booking) => (
               <div>
                 <div>
-                  <span className="font-bold mr-2">Dates: </span>
+                  <span className="font-bold mr-2">Thời gian đặt phòng: </span>
                   <span>
                     {new Date(booking.checkIn).toDateString()} -
                     {new Date(booking.checkOut).toDateString()}
                   </span>
                 </div>
                 <div>
-                  <span className="font-bold mr-2">Guests:</span>
+                  <span className="font-bold mr-2">Khách:</span>
                   <span>
-                    {booking.adultCount} adults, {booking.childCount} children
+                    {booking.adultCount} Người lớn, {booking.childCount} Trẻ em
                   </span>
                 </div>
               </div>

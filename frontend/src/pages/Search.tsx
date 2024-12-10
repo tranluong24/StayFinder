@@ -73,7 +73,7 @@ const Search = () => {
       <div className="rounded-lg border border-slate-300 p-5 h-fit sticky top-10">
         <div className="space-y-5">
           <h3 className="text-lg font-semibold border-b border-slate-300 pb-5">
-            Filter by:
+            Chọn lọc theo:
           </h3>
           <StarRatingFilter
             selectedStars={selectedStars}
@@ -104,13 +104,13 @@ const Search = () => {
             onChange={(event) => setSortOption(event.target.value)}
             className="p-2 border rounded-md"
           >
-            <option value="">Sort By</option>
-            <option value="starRating">Star Rating</option>
+            <option value="">Sắp xếp theo</option>
+            <option value="starRating">Sao</option>
             <option value="pricePerNightAsc">
-              Price Per Night (low to high)
+              Giá mỗi đêm (thấp đến cao)
             </option>
             <option value="pricePerNightDesc">
-              Price Per Night (high to low)
+              Giá mỗi đêm (cao đến thấp)
             </option>
           </select>
         </div>

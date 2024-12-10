@@ -68,7 +68,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
 
   return (
     <div className="flex flex-col p-4 bg-blue-200 gap-4">
-      <h3 className="text-md font-bold">£{pricePerNight}</h3>
+      <h3 className="text-md font-bold">{pricePerNight}VNĐ</h3>
       <form
         onSubmit={
           isLoggedIn ? handleSubmit(onSubmit) : handleSubmit(onSignInClick)
@@ -107,7 +107,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
           </div>
           <div className="flex bg-white px-2 py-1 gap-2">
             <label className="items-center flex">
-              Adults:
+              Người lớn:
               <input
                 className="w-full p-1 focus:outline-none font-bold"
                 type="number"
@@ -124,7 +124,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               />
             </label>
             <label className="items-center flex">
-              Children:
+              Trẻ em:
               <input
                 className="w-full p-1 focus:outline-none font-bold"
                 type="number"
@@ -143,11 +143,11 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
           </div>
           {isLoggedIn ? (
             <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
-              Book Now
+              Đặt ngay
             </button>
           ) : (
             <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
-              Sign in to Book
+              Đăng nhập để đặt phòng
             </button>
           )}
         </div>

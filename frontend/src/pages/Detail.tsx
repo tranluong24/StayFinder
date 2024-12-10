@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import * as apiClient from "./../api-client";
-import { AiFillStar } from "react-icons/ai";
+import { AiFillStar, AiOutlineEnvironment } from "react-icons/ai";
 import GuestInfoForm from "../forms/GuestInfoForm/GuestInfoForm";
 
 const Detail = () => {
@@ -28,7 +28,19 @@ const Detail = () => {
             <AiFillStar className="fill-yellow-400" />
           ))}
         </span>
-        <h1 className="text-3xl font-bold">{hotel.name}</h1>
+        <h1 className="text-2xl font-bold">{hotel.name}</h1>
+        <h6 className="italic flex items-center">
+          {/* Biểu tượng địa chỉ */}
+          <a 
+            href="https://www.google.com/maps" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center text-blue-500"
+          >
+            <AiOutlineEnvironment className="mr-1" />
+          </a>
+          {hotel.country}, {hotel.city}
+        </h6>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -42,16 +54,20 @@ const Detail = () => {
           </div>
         ))}
       </div>
+      <h6 className="font-bold text-xl">Tiện ích</h6>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
+     
         {hotel.facilities.map((facility) => (
           <div className="border border-slate-300 rounded-sm p-3">
             {facility}
           </div>
         ))}
       </div>
+      <h6 className="font-bold text-xl">Mô tả</h6>
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+      
         <div className="whitespace-pre-line">{hotel.description}</div>
         {data?.role ==='user' &&(
         <div className="h-fit">

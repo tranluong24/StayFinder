@@ -66,7 +66,7 @@ const AdminPage = () => {
         {
           label: "Có",
           onClick: () => {
-            handleDelete(id),
+            handleDelete(id)
             mutateDelHotelByUser(id)
           },
         },
@@ -120,7 +120,7 @@ const AdminPage = () => {
       </div>
     ); 
   if (error) {
-    return <div>Error loading Admin</div>;}
+    return <div>Lỗi tải trang Admin</div>;}
 
   return (
     <div className="flex h-screen">
@@ -132,13 +132,13 @@ const AdminPage = () => {
             alt="Admin Avatar"
             className="w-20 h-20 rounded-full border-4 border-gray-600"
           />
-          <h3 className="mt-2 text-lg font-bold text-center">Welcome Admin</h3>
+          <h3 className="mt-2 text-lg font-bold text-center">Chào mừng bạn đến trang Admin</h3>
         </div>
         <ul>
           <li className="mb-2 flex items-center gap-2">
             <FaHome />
             <a href="/" className="block py-2 px-4 rounded hover:bg-gray-700">
-              Home
+              Trang chủ
             </a>
           </li>
           <li className="mb-2 flex items-center gap-2">
@@ -150,7 +150,7 @@ const AdminPage = () => {
           <li className="mb-2 flex items-center gap-2">
             <FaCog />
             <a href="/admin" className="block py-2 px-4 rounded hover:bg-gray-700">
-              Settings
+              Cài đặt
             </a>
           </li>
         </ul>
@@ -173,11 +173,11 @@ const AdminPage = () => {
           <thead>
             <tr className="bg-gray-200">
               <th className="border border-gray-300 p-2">Email</th>
-              <th className="border border-gray-300 p-2">First Name</th>
-              <th className="border border-gray-300 p-2">Last Name</th>
-              <th className="border border-gray-300 p-2">Role</th>
-              <th className="border border-gray-300 p-2">Status</th>
-              <th className="border border-gray-300 p-2">Actions</th>
+              <th className="border border-gray-300 p-2">Họ và tên đệm</th>
+              <th className="border border-gray-300 p-2">Tên</th>
+              <th className="border border-gray-300 p-2">Vai trò</th>
+              <th className="border border-gray-300 p-2">Trạng thái</th>
+              <th className="border border-gray-300 p-2">Tùy chọn</th>
             </tr>
           </thead>
           <tbody>
@@ -196,9 +196,9 @@ const AdminPage = () => {
                         onChange={(e) => setEditedStatus(e.target.value as StatusType)}
                         className={`p-3 rounded font-bold ${editedStatus === 'reject' ? 'text-red-500' : editedStatus === 'pending' ? 'text-yellow-500' : editedStatus === 'done' ? 'text-green-500' : ''}`}
                       >
-                        <option className = "font-bold text-red-500" value="reject">Reject</option>
-                        <option className = "font-bold text-yellow-500" value="pending">Pending</option>
-                        <option className = "font-bold text-green-500" value="done">Done</option>
+                        <option className = "font-bold text-red-500" value="reject">Từ chối</option>
+                        <option className = "font-bold text-yellow-500" value="pending">Chưa giải quyết</option>
+                        <option className = "font-bold text-green-500" value="done">Duyệt</option>
                       </select>
                       <button
                         onClick={() => handleSaveStatusConfirm(user)}

@@ -39,10 +39,10 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
         apiClient.createRoomBooking,
         {
           onSuccess: () => {
-            showToast({ message: "Booking Saved!", type: "SUCCESS" });
+            showToast({ message: "Đặt phòng thành công!", type: "SUCCESS" });
           },
           onError: () => {
-            showToast({ message: "Error saving booking", type: "ERROR" });
+            showToast({ message: "Đặt phòng thất bại", type: "ERROR" });
           },
         }
       );
@@ -83,7 +83,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5">
             <span className="text-3xl font-bold">
-                Confirm Your Details
+                Xác nhận thông tin chi tiết của bạn
             </span>
             <div className="grid grid-cols-2 gap-6">
                 <label className="text-gray-700 text-sm fond-bold flex-1">
@@ -116,18 +116,18 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
             </div>
 
             <div className="space-y-2">
-                <h2 className="text-xl font-semibold">Your Price Summary</h2>
+                <h2 className="text-xl font-semibold">Giá phòng bạn phải trả</h2>
 
                 <div className="bg-blue-200 p-4 rounded-md">
                     <div className="font-semibold text-lg">
-                    Total Cost: £{paymentIntent.totalCost.toFixed(2)}
+                    Tổng chi phí: {paymentIntent.totalCost.toFixed(2)}VNĐ
                     </div>
-                    <div className="text-xs">Includes taxes and charges</div>
+                    <div className="text-xs">Bao gồm thuế và phí</div>
                 </div>
             </div>
 
             <div className="space-y-2">
-                <h3 className="text-xl font-semibold"> Payment Details</h3>
+                <h3 className="text-xl font-semibold"> Chi tiết thanh toán</h3>
                 <CardElement
                 id="payment-element"
                 className="border rounded-md p-2 text-sm"
@@ -140,7 +140,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
                 type="submit"
                 className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-md disabled:bg-gray-500"
                 >
-                {isLoading ? "Saving..." : "Confirm Booking"}
+                {isLoading ? "Đang xác nhận..." : "Xác nhận đặt phòng"}
                 </button>
             </div>
 

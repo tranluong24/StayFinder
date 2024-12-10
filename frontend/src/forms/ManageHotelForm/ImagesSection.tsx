@@ -22,7 +22,7 @@ const ImagesSection = () => {
     return(
         <div>
             <h2 className="text-2xl font-bold mb-3">
-                Images
+                Ảnh
             </h2>
             <div className="border rounded p-4 flex flex-col gap-4">
                 {existingImageUrls && (
@@ -33,7 +33,7 @@ const ImagesSection = () => {
                             <button 
                             onClick={(event) => handleDelete(event, url)}
                             className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 text-white">
-                                Delete
+                                Xóa
                             </button>
                            </div>
                         ))}

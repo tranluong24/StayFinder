@@ -1,4 +1,4 @@
-import { AiFillStar } from "react-icons/ai"
+import { AiFillStar, AiOutlineEnvironment } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import { HotelType } from "../../../backend/src/shared/types"
 
@@ -29,6 +29,18 @@ const SearchResultsCard = ({hotel}: Props) => {
                     <Link to={`/detail/${hotel._id}`} className="text-2xl font-bold cursor-pointer">
                         {hotel.name} 
                     </Link>
+                    <h6 className="italic flex items-center">
+          {/* Biểu tượng địa chỉ */}
+          <a 
+            href="https://www.google.com/maps" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center text-blue-500"
+          >
+            <AiOutlineEnvironment className="mr-1" />
+          </a>
+          {hotel.country}, {hotel.city}
+        </h6>
                 </div>
 
                 <div>
@@ -51,10 +63,10 @@ const SearchResultsCard = ({hotel}: Props) => {
                     </div>
                     <div className="flex flex-col items-end gap-1">
                         <span className="font-bold">
-                            ${hotel.pricePerNight} per night
+                            {hotel.pricePerNight}VNĐ mỗi đêm
                         </span>
                         <Link to={`/detail/${hotel._id}`} className="bg-blue-600 text-white h-full p-2 font-bold text-xl max-w-fit hover:bg-blue-500">
-                            View more
+                            xem thêm
                         </Link>
                     </div>
                 </div>
