@@ -89,6 +89,22 @@ const DetailsSection = () => {
               <span className="text-red-500">{errors.starRating.message}</span>
             )}
           </label>
+          
+          <label className="text-gray-700 text-sm font-bold max-w-[50%]">
+            Number of Rooms
+            <input
+              type="number"
+              min={1}
+              className="border rounded w-full py-1 px-2 font-normal"
+              {...register("numberOfRoom", { 
+                required: "This field is required", 
+                min: { value: 1, message: "At least 1 room is required" },
+              })}
+            />
+            {errors.numberOfRoom && (
+              <span className="text-red-500">{errors.numberOfRoom.message}</span>
+            )}
+          </label>          
         </div>
       );
     };

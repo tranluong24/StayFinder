@@ -2,7 +2,10 @@ import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import { useSearchContext } from "../../contexts/SearchContext";
 import { useAppContext } from "../../contexts/AppContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
+import * as apiClient from "../../api-client";
+import { useQuery } from "react-query"
+import ManageHotelForm from '../ManageHotelForm/ManageHotelForm';
 
 type Props = {
   hotelId: string;
@@ -55,7 +58,16 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
     navigate("/sign-in", { state: { from: location } });
   };
 
-  const onSubmit = (data: GuestInfoFormData) => {
+  const {refetch, data: dateBookedFull} = useQuery(
+    "validateNumberOfRoom",
+    () => apiClient.validateNumberOfRoom(hotelId, checkIn.toISOString(), checkOut.toISOString()),
+    {
+      enabled: false // Chỉ gọi API khi cả hai ngày được chọn
+    }
+  );
+
+
+  const onSubmit = async (data: GuestInfoFormData) => {
     search.saveSearchValues(
       "",
       data.checkIn,
@@ -63,8 +75,15 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       data.adultCount,
       data.childCount
     );
-    navigate(`/hotel/${hotelId}/booking`);
+
+    const {data: dateBookedFull} = await refetch()
+
+    if(dateBookedFull?.available){
+      navigate(`/hotel/${hotelId}/booking`);
+    }
   };
+
+  const unavailableDates = dateBookedFull?.unavailable || [];
 
   return (
     <div className="flex flex-col p-4 bg-blue-200 gap-4">
@@ -141,6 +160,20 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               </span>
             )}
           </div>
+          {dateBookedFull?.available === false && (
+            <div>
+              <span className="text-red-500 font-semibold text-sm">
+                Khách sạn đã hết phòng trong một số ngày bạn đã chọn!
+              </span>
+              <ul className="text-sm text-red-600 mt-2 font-semibold">
+                {dateBookedFull.unavailableDates?.map((unavailableDate: string, index: number) => (
+                  <li key={index}>
+                    {new Date(unavailableDate).toLocaleDateString("en-GB")}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {isLoggedIn ? (
             <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
               Book Now

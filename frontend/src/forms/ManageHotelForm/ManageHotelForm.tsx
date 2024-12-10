@@ -20,6 +20,7 @@ export type HotelFormData = {
     imageUrls: string[];
     adultCount: number;
     childCount: number;
+    numberOfRoom: number;
   };
 
   type Props = {
@@ -52,6 +53,7 @@ export type HotelFormData = {
       formData.append("starRating", formDataJson.starRating.toString());
       formData.append("adultCount", formDataJson.adultCount.toString());
       formData.append("childCount", formDataJson.childCount.toString());
+      formData.append("numberOfRoom", formDataJson.numberOfRoom.toString())
 
       formDataJson.facilities.forEach((facility, index)=>{
         formData.append(`facilities[${index}]`, facility)

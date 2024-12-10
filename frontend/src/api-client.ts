@@ -291,3 +291,22 @@ export const updateUserStatus = async(userData: UserType) =>{
 
   return response.json()
 }
+
+export const validateNumberOfRoom = async (hotelId: string, checkIn: string, checkOut:string) =>{
+    const response = await fetch(
+      `${API_BASE_URL}/api/hotels/validateNumberOfRoom`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },    
+        body: JSON.stringify({hotelId,checkIn,checkOut}),
+        credentials: "include"
+      }
+    )
+
+    if(!response.ok){
+      throw new Error ("Failed to check DateBooked")
+    }
+
+    return response.json()
+}
