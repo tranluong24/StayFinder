@@ -39,7 +39,7 @@ const SignIn: React.FC = () => {
 
   // Google Sign-in logic
   const handleGoogleSignIn = () => {
-    window.location.href = "http://localhost:3001/loginGoogle";
+    window.location.href = "http://localhost:3001/api/loginGoogle";
   };
 
   // Handle Google callback
