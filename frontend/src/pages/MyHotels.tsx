@@ -16,19 +16,19 @@ const MyHotels = () => {
   const {data} = useQuery("fetchCurrentUser", apiClient.fetchCurrentUser)
 
   if (!hotelData) {
-    return <span>No Hotels found</span>;
+    return <span>Không tìm thấy khách sạn</span>;
   }
 
   return (
     <div className="space-y-5">
       <span className="flex justify-between">
-        <h1 className="text-3xl font-bold">My Hotels</h1>
+        <h1 className="text-3xl font-bold">Khách sạn của tôi</h1>
         {data?.status === 'done' && (
         <Link
           to="/add-hotel"
-          className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500"
+          className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500 rounded-lg border border-gray-300"
         >
-          Add Hotel
+          Thêm khách sạn
         </Link>
         )}
       </span>
@@ -39,34 +39,36 @@ const MyHotels = () => {
             className="flex flex-col justify-between border border-slate-300 rounded-lg p-8 gap-5"
           >
             <h2 className="text-2xl font-bold">{hotel.name}</h2>
-            <div className="whitespace-pre-line">{hotel.description}</div>
             <div className="grid grid-cols-5 gap-2">
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center">
+              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
                 <BsMap className="mr-1" />
-                {hotel.city}, {hotel.country}
+                {hotel.country}, {hotel.city}
               </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center">
+              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
                 <BsBuilding className="mr-1" />
                 {hotel.type}
               </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center">
-                <BiMoney className="mr-1" />£{hotel.pricePerNight} per night
+              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
+                <BiMoney className="mr-1" />{hotel.pricePerNight}VNĐ mỗi đêm
               </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center">
+              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
                 <BiHotel className="mr-1" />
-                {hotel.adultCount} adults, {hotel.childCount} children
+                {hotel.adultCount} người lớn, {hotel.childCount} trẻ em
               </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center">
+              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
                 <BiStar className="mr-1" />
-                {hotel.starRating} Star Rating
+                {hotel.starRating} sao
               </div>
             </div>
+            
+            <div className="whitespace-pre-line">{hotel.description}</div>
+            
             <span className="flex justify-end">
               <Link
                 to={`/edit-hotel/${hotel._id}`}
-                className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500"
+                className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500 rounded-lg border border-gray-300"
               >
-                View Details
+                Xem chi tiết
               </Link>
             </span>
           </div>

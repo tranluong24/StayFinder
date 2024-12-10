@@ -20,39 +20,39 @@ const BookingDetailsSummary = ({
     return (
         <div className="grid gap-4 rounded-lg border border-slate-300 p-5 h-fit">
             <h2 className="text-xl font-bold">
-                Your Booking Details
+                Chi tiết đặt phòng của bạn
             </h2>
             <div className="border-b py-2">
-                Location:
+                Vị trí:
                 <div className="font-bold">
-                    {`${hotel.name}, ${hotel.city}, ${hotel.country}`}
+                    {`${hotel.name}, ${hotel.country}, ${hotel.city}`}
                 </div>
             </div>
             <div className="flex justify-between">
                 <div>
-                    Check-in
+                    Ngày đặt
                     <div className="font-bold">
                         {checkIn.toDateString()}
                     </div>
                 </div>
                 <div>
-                    Check-out
+                    Ngày trả
                     <div className="font-bold">
                         {checkOut.toDateString()}
                     </div>
                 </div>
             </div>
             <div className="border-t border-b py-2">
-                Total length of stay:
+                Tổng thời gian đặt phòng:
                 <div className="font-bold">
-                    {numberOfNights} nights
+                    {numberOfNights} đêm
                 </div>
             </div>
 
             <div>
-                Guests{""}
+                Khách{""}
                 <div className="font-bold">
-                    {adultCount} adults & {childCount} children
+                    {adultCount} Người lớn & {childCount} Trẻ em
                 </div>
             </div>
         </div>

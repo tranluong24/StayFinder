@@ -38,16 +38,21 @@ const Register = () => {
     });
 
     const onSubmit = handleSubmit((data) => {
-        data.role === "host" ? data.status = 'pending' : data.status = 'done';
+        if(data.role === "host"){
+         data.status = 'pending' 
+        }
+        else{
+            data.status = 'done';
+        }
         mutation.mutate(data);
     });
 
     return (
         <form className="flex flex-col gap-5" onSubmit={onSubmit}>
-            <h2 className="text-3xl font-bold">Create an Account</h2>
+            <h2 className="text-3xl font-bold">Tạo 1 tài khoản</h2>
             <div className="flex flex-col md:flex-row gap-5">
                 <label className="text-gray-700 text-sm font-bold flex-1">
-                    First Name
+                    Họ và tên đệm
                     <input
                         className="border rounded w-full py-1 px-2 font-normal"
                         {...register("firstName", { required: "This field is required" })}
@@ -57,7 +62,7 @@ const Register = () => {
                     )}
                 </label>
                 <label className="text-gray-700 text-sm font-bold flex-1">
-                    Last Name
+                    Tên
                     <input
                         className="border rounded w-full py-1 px-2 font-normal"
                         {...register("lastName", { required: "This field is required" })}
@@ -79,7 +84,7 @@ const Register = () => {
                 )}
             </label>
             <label className="text-gray-700 text-sm font-bold flex-1">
-                Password
+                Mật khẩu
                 <input
                     type="password"
                     className="border rounded w-full py-1 px-2 font-normal"
@@ -96,7 +101,7 @@ const Register = () => {
                 )}
             </label>
             <label className="text-gray-700 text-sm font-bold flex-1">
-                Confirm Password
+                Nhắc lại mật khẩu
                 <input
                     type="password"
                     className="border rounded w-full py-1 px-2 font-normal"
@@ -115,7 +120,7 @@ const Register = () => {
                 )}
             </label>
             <label className="text-gray-700 text-sm font-bold">
-                Role
+                Vai trò
                 <select
                     className="border rounded w-full py-1 px-2 font-normal"
                     {...register("role", { required: "Please select a role" })}
@@ -130,9 +135,9 @@ const Register = () => {
             <span>
                 <button
                     type="submit"
-                    className="bg-blue-600 text-white p-3 font-bold hover:bg-blue-500 text-xl rounded"
+                    className="bg-blue-600 text-white p-3 font-bold hover:bg-blue-500 text-xl rounded rounded-lg border border-gray-300"
                 >
-                    Create Account
+                    Đăng kí
                 </button>
             </span>
         </form>

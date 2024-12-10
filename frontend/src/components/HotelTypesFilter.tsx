@@ -8,12 +8,12 @@ type Props = {
 const HotelTypesFilter = ({ selectedHotelTypes, onChange }: Props) => {
   return (
     <div className="border-b border-slate-300 pb-5">
-      <h4 className="text-md font-semibold mb-2">Hotel Type</h4>
+      <h4 className="text-md font-semibold mb-2">Kiểu khách sạn</h4>
       {hotelTypes.map((hotelType) => (
         <label className="flex items-center space-x-2">
           <input
             type="checkbox"
-            className="rounded"
+            className="rounded w-5 h-5" // Tăng kích thước
             value={hotelType}
             checked={selectedHotelTypes.includes(hotelType)}
             onChange={onChange}

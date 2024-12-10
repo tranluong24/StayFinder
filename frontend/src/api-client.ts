@@ -79,7 +79,7 @@ export const addMyHotel = async (hotelFormData: FormData) => {
   })
 
   if(!response.ok){
-    throw new Error("Failed to add hotel")
+    throw new Error("Thêm khách sạn không thành công")
   }
 
   return response.json();
