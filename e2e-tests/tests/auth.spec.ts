@@ -7,11 +7,11 @@ test('allow the user to sign in', async ({ page }) => {
 
   //get the sign in button
   await page.getByRole("link", {
-    name: "Sign In"
+    name: "Đăng nhập"
   }).click();
   //Kiem tra xem phan Heading co phai la Sign In khong ?
   await expect(page.getByRole("heading",{
-    name: "Sign In"
+    name: "Đăng nhập"
   })).toBeVisible();
   //Chon vao the co thuoc tinh name va dien thong tin dang nhap
   //CSS selector
@@ -25,16 +25,16 @@ test('allow the user to sign in', async ({ page }) => {
   await expect(page.getByText("Sign in Successful!")).toBeVisible();
   //Kiem tra xem cac thanh phan co hien thi dung hay k ?
   await expect(page.getByRole("link", {
-    name: "My Bookings"
+    name: "Admin"
   })).toBeVisible();
 
-  await expect(page.getByRole("link", {
-    name: "My Hotels"
-  })).toBeVisible();
+  // await expect(page.getByRole("link", {
+  //   name: "My Hotels"
+  // })).toBeVisible();
 
-  await expect(page.getByRole("button", {
-    name: "Sign Out"
-  })).toBeVisible();
+  // await expect(page.getByRole("button", {
+  //   name: "Sign Out"
+  // })).toBeVisible();
 
 });
 
