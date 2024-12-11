@@ -88,7 +88,7 @@ router.post("/:hotelId/bookings/payment-intent", verifyToken, async(req: Request
     const {numberOfNights} = req.body
     const hotelId = req.params.hotelId
     const hotel = await Hotel.findById(hotelId)
-    
+
     if(!hotel){
         res.status(400).json({message:"Hotel not found"})
     }else{
@@ -176,16 +176,10 @@ router.post("/:hotelId/bookings", verifyToken, async(req: Request, res: Response
                             }
                           });
                         hotel.bookings.push(newBooking);
-                        // const result =  await Hotel.findOneAndUpdate(
-                        //     {_id: req.params.hotelId},
-                        //     {$push: {bookings: newBooking},}
-                        // )
-                        await hotel.save()
                         res.status(200).send();
                     }
                 }
-            }
-            
+            } 
         }
     }catch (err){
         res.status(500).json({message: "Something went wrong"})

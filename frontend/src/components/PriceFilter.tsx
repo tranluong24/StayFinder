@@ -17,7 +17,7 @@ type Props = {
           }
         >
           <option value="">Chọn mệnh giá (VNĐ)</option>
-            {[1500000, 2000000, 2500000, 3000000, 4000000, 5000000, 10000000, 20000000].map((price) => (
+            {[500000,1500000, 2000000, 2500000, 3000000, 4000000, 5000000].map((price) => (
           <option value={price}>{price.toLocaleString('vi-VN')}</option>
         ))}
         </select>

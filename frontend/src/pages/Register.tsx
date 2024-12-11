@@ -135,7 +135,7 @@ const Register = () => {
             <span>
                 <button
                     type="submit"
-                    className="bg-blue-600 text-white p-3 font-bold hover:bg-blue-500 text-xl rounded-lg border border-gray-300"
+                    className="bg-blue-600 text-white p-3 font-bold hover:bg-blue-500 text-xl rounded border border-gray-300"
                 >
                     Đăng kí
                 </button>
