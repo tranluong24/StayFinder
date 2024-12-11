@@ -12,7 +12,7 @@ return(
         <div className="grid grid-cols-5 gap-3">
             {hotelFacilities.map((facility) =>(
                 <label className="text-sm flex- gap-1 text-gray-700">
-                    <input type="checkbox" value={facility} {...register("facilities", {
+                    <input type="checkbox" className="rounded w-5 h-5" value={facility} {...register("facilities", {
                         validate: (facilities)=> {
                             if(facilities && facilities.length > 0){
                                 return true

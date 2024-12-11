@@ -1,12 +1,18 @@
-import { AiFillStar, AiOutlineEnvironment } from "react-icons/ai"
+import { AiFillHeart, AiFillStar, AiOutlineEnvironment, AiOutlineHeart } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import { HotelType } from "../../../backend/src/shared/types"
+import { useState } from "react"
 
 type Props = {
     hotel: HotelType
 }
 
 const SearchResultsCard = ({hotel}: Props) => {
+
+    const [isFavorited, setIsFavorited] = useState(false);
+    const toggleFavorite = () => {
+        setIsFavorited(!isFavorited);
+    };
     return (
         <div className="grid grid-cols-1 xl:grid-cols-[2fr_3fr] border border-slate-300 rounded-lg p-8 gap-8">
             <div className="w-full h-[300px]">
@@ -41,9 +47,11 @@ const SearchResultsCard = ({hotel}: Props) => {
           </a>
           {hotel.country}, {hotel.city}
         </h6>
-                </div>
-
-                <div>
+            </div>
+                <div className = "mt-1">
+                <button className="bg-green-600 text-white text-sm px-2 rounded-full hover:bg-green-700">
+                    Ưu đãi cuối năm
+                </button>
                     <div className="line-clamp-4">
                         {hotel.description}
                     </div>
@@ -61,10 +69,11 @@ const SearchResultsCard = ({hotel}: Props) => {
                                 `+${hotel.facilities.length - 3} more`}
                         </span>
                     </div>
-                    <div className="flex flex-col items-end gap-1">
+                    <div className="flex flex-col items-end gap-1 text-xl">
                         <span className="font-bold">
-                            {hotel.pricePerNight}VNĐ mỗi đêm
+                        VNĐ {hotel.pricePerNight.toLocaleString('vi-VN')}
                         </span>
+                        <span className = "text-sm italic">Đã bao gồm thuế và phí</span>
                         <Link to={`/detail/${hotel._id}`} className="bg-blue-600 text-white h-full p-2 font-bold text-xl max-w-fit hover:bg-blue-500">
                             xem thêm
                         </Link>

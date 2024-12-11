@@ -1,81 +1,147 @@
-import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
-import * as apiClient from "../api-client";
-import { BsBuilding, BsMap } from "react-icons/bs";
-import { BiHotel, BiMoney, BiStar } from "react-icons/bi";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import * as apiClient from '../api-client';
+import { useAppContext } from "../contexts/AppContext";
+import { useNavigate } from "react-router-dom";
 
-const MyHotels = () => {
-  const { data: hotelData } = useQuery(
-    "fetchMyHotels",
-    apiClient.fetchMyHotels,
-    {
-      onError: () => {},
-    }
-  );
-
-  const {data} = useQuery("fetchCurrentUser", apiClient.fetchCurrentUser)
-
-  if (!hotelData) {
-    return <span>Không tìm thấy khách sạn</span>;
-  }
-
-  return (
-    <div className="space-y-5">
-      <span className="flex justify-between">
-        <h1 className="text-3xl font-bold">Khách sạn của tôi</h1>
-        {data?.status === 'done' && (
-        <Link
-          to="/add-hotel"
-          className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500 rounded-lg border border-gray-300"
-        >
-          Thêm khách sạn
-        </Link>
-        )}
-      </span>
-      <div className="grid grid-cols-1 gap-8">
-        {hotelData.map((hotel) => (
-          <div
-            data-testid="hotel-card"
-            className="flex flex-col justify-between border border-slate-300 rounded-lg p-8 gap-5"
-          >
-            <h2 className="text-2xl font-bold">{hotel.name}</h2>
-            <div className="grid grid-cols-5 gap-2">
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
-                <BsMap className="mr-1" />
-                {hotel.country}, {hotel.city}
-              </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
-                <BsBuilding className="mr-1" />
-                {hotel.type}
-              </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
-                <BiMoney className="mr-1" />{hotel.pricePerNight}VNĐ mỗi đêm
-              </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
-                <BiHotel className="mr-1" />
-                {hotel.adultCount} người lớn, {hotel.childCount} trẻ em
-              </div>
-              <div className="border border-slate-300 rounded-sm p-3 flex items-center font-bold">
-                <BiStar className="mr-1" />
-                {hotel.starRating} sao
-              </div>
-            </div>
-            
-            <div className="whitespace-pre-line">{hotel.description}</div>
-            
-            <span className="flex justify-end">
-              <Link
-                to={`/edit-hotel/${hotel._id}`}
-                className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500 rounded-lg border border-gray-300"
-              >
-                Xem chi tiết
-              </Link>
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+export type RegisterFormData = {
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
+    role: string,
+    status: string,
 };
 
-export default MyHotels;
+const Register = () => {
+    const navigate = useNavigate();
+    const { showToast } = useAppContext();
+    const queryClient = useQueryClient();
+
+    const { 
+        register, 
+        watch, 
+        handleSubmit, 
+        formState: { errors },
+    } = useForm<RegisterFormData>();
+
+    const mutation = useMutation(apiClient.register, {
+        onSuccess: async () => {
+            showToast({ message: "Registration Success!", type: "SUCCESS" });
+            await queryClient.invalidateQueries("validateToken");
+            navigate("/");
+        },
+        onError: (error: Error) => {
+            showToast({ message: error.message, type: "ERROR" });
+        }
+    });
+
+    const onSubmit = handleSubmit((data) => {
+        if(data.role === "host"){
+         data.status = 'pending' 
+        }
+        else{
+            data.status = 'done';
+        }
+        mutation.mutate(data);
+    });
+
+    return (
+        <form className="flex flex-col gap-5" onSubmit={onSubmit}>
+            <h2 className="text-3xl font-bold">Tạo tài khoản</h2>
+            <div className="flex flex-col md:flex-row gap-5">
+                <label className="text-gray-700 text-sm font-bold flex-1">
+                    Họ và tên đệm
+                    <input
+                        className="border rounded w-full py-1 px-2 font-normal"
+                        {...register("firstName", { required: "This field is required" })}
+                    />
+                    {errors.firstName && (
+                        <span className="text-red-500">{errors.firstName.message}</span>
+                    )}
+                </label>
+                <label className="text-gray-700 text-sm font-bold flex-1">
+                    Tên
+                    <input
+                        className="border rounded w-full py-1 px-2 font-normal"
+                        {...register("lastName", { required: "This field is required" })}
+                    />
+                    {errors.lastName && (
+                        <span className="text-red-500">{errors.lastName.message}</span>
+                    )}
+                </label>
+            </div>
+            <label className="text-gray-700 text-sm font-bold flex-1">
+                Email
+                <input
+                    type="email"
+                    className="border rounded w-full py-1 px-2 font-normal"
+                    {...register("email", { required: "This field is required" })}
+                />
+                {errors.email && (
+                    <span className="text-red-500">{errors.email.message}</span>
+                )}
+            </label>
+            <label className="text-gray-700 text-sm font-bold flex-1">
+                Mật khẩu
+                <input
+                    type="password"
+                    className="border rounded w-full py-1 px-2 font-normal"
+                    {...register("password", {
+                        required: "This field is required",
+                        minLength: {
+                            value: 6,
+                            message: "Password must be at least 6 characters",
+                        },
+                    })}
+                />
+                {errors.password && (
+                    <span className="text-red-500">{errors.password.message}</span>
+                )}
+            </label>
+            <label className="text-gray-700 text-sm font-bold flex-1">
+                Nhắc lại mật khẩu
+                <input
+                    type="password"
+                    className="border rounded w-full py-1 px-2 font-normal"
+                    {...register("confirmPassword", {
+                        validate: (val) => {
+                            if (!val) {
+                                return "This field is required";
+                            } else if (watch("password") !== val) {
+                                return "Passwords do not match";
+                            }
+                        },
+                    })}
+                />
+                {errors.confirmPassword && (
+                    <span className="text-red-500">{errors.confirmPassword.message}</span>
+                )}
+            </label>
+            <label className="text-gray-700 text-sm font-bold">
+                Vai trò
+                <select
+                    className="border rounded w-full py-1 px-2 font-normal"
+                    {...register("role", { required: "Please select a role" })}
+                >
+                    <option value="user">user</option>
+                    <option value="host">host</option>
+                </select>
+                {errors.role && (
+                    <span className="text-red-500">{errors.role.message}</span>
+                )}
+            </label>
+            <span>
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-white p-3 font-bold hover:bg-blue-500 text-xl rounded rounded-lg border border-gray-300"
+                >
+                    Đăng kí
+                </button>
+            </span>
+        </form>
+    );
+};
+
+export default Register;

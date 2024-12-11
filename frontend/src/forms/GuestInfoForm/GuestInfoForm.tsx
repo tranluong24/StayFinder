@@ -5,6 +5,7 @@ import { useAppContext } from "../../contexts/AppContext";
 import { useLocation, useNavigate} from "react-router-dom";
 import * as apiClient from "../../api-client";
 import { useQuery } from "react-query"
+import { MdCalendarToday } from "react-icons/md";
 
 type Props = {
   hotelId: string;
@@ -86,7 +87,8 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
 
   return (
     <div className="flex flex-col p-4 bg-blue-200 gap-4">
-      <h3 className="text-md font-bold">{pricePerNight}VNĐ</h3>
+      <h3 className="text-md font-bold text-xl">VNĐ {pricePerNight.toLocaleString('vi-VN')}</h3>
+      <h6 className = "text-sm italic">Đã bao gồm thuế và phí</h6>
       <form
         onSubmit={
           isLoggedIn ? handleSubmit(onSubmit) : handleSubmit(onSignInClick)
@@ -127,7 +129,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
             <label className="items-center flex">
               Người lớn:
               <input
-                className="w-full p-1 focus:outline-none font-bold"
+                className="w-1/3 p-1 focus:outline-none font-bold"
                 type="number"
                 min={1}
                 max={20}
@@ -144,7 +146,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
             <label className="items-center flex">
               Trẻ em:
               <input
-                className="w-full p-1 focus:outline-none font-bold"
+                className="w-1/3 p-1 focus:outline-none font-bold"
                 type="number"
                 min={0}
                 max={20}
