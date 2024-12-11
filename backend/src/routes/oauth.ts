@@ -7,7 +7,7 @@ const router = express.Router();
 
 const GOOGLE_OAUTH_URL = process.env.GOOGLE_OAUTH_URL;
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
-const GOOGLE_CALLBACK_URL = "http%3A//localhost:3001/api/google/callback";
+const GOOGLE_CALLBACK_URL = "https%3A//nhom-32-web.onrender.com//api/google/callback";
 const GOOGLE_OAUTH_SCOPES = [
   "https%3A//www.googleapis.com/auth/userinfo.email",
 
@@ -32,7 +32,7 @@ router.get("/google/callback", async (req: Request, res: Response) => {
     code, // Mã ủy quyền từ Google
     client_id: process.env.CLIENT_ID, // ID của ứng dụng client
     client_secret: GOOGLE_CLIENT_SECRET, // Bí mật client
-    redirect_uri: "http://localhost:3001/api/google/callback", // URL callback của bạn
+    redirect_uri: "https://nhom-32-web.onrender.com/api/google/callback", // URL callback của bạn
     grant_type: "authorization_code", // Loại yêu cầu là "authorization_code"
   };
 
