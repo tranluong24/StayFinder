@@ -1,0 +1,69 @@
+echo "# Nhom-32-Web-" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/LuongTran13/Nhom-32-Web-.git
+git push -u origin main
+
+//Cai day moi truong cho typescript
+npm -i g typescript -> cai toan cuc
+npm i ts-node
+ts-node --init
+run -> ts-node app.ts
+
+//Khoi tao frontend
+npm create vite@latest
+
+//Quy trinh
+B1: Backend setup
+- Nhớ install typescript ở global
+B2: Frontend setup
+B3: MongoDB setup
+- Chỉnh sửa thông tin trong credential manager để sửa thông tin đăng nhập github
+- name: stayfinder123
+- pass: NO
+- URL connect: NO
+- Tao file .env de chua cac thong tin db
+B4: Khoi tao bo cuc giao dien
+- cai dat TailwindCSS: npm i -D tailwindcss postcss autoprefixer
+- khoi tao TailwindCSS: npx tailwindcs init -p
+4.1: Khởi tạo layout
++ Header: tiêu đề web + nut sign in
++ Ở giữa là nội dung của trang web, các trang....
++ Footer: tiêu đề + các đường link
+
+!: Nho insall npm install react-router-dom
++ App.tsx chua cac cau truc chinh, route,layout, components con...
+
+Them: Header, Hero, Footer
+
+B5: Đăng ky và xác thực
+5.1: Dang ky
+-Xác thực: Đăng ký -> mã hóa tài khoản và lưu vào db
+-> Tạo ra JWT để cho người dùng đăng nhập và lưu vào cookie
+- Xây dựng trang đăng ký: Tạo models user
+- Tao restfulAPI (trong routers)
+////////////////////
+Promise là gì?
+Promise trong JavaScript là một đối tượng đại diện cho một giá trị sẽ có trong tương lai. Đối tượng này giúp xử lý các tác vụ bất đồng bộ (chẳng hạn như tải dữ liệu từ server) một cách rõ ràng và hiệu quả hơn. Có ba trạng thái chính của một Promise:
+Pending: Trạng thái chờ, chưa hoàn thành.
+Fulfilled: Đã hoàn thành và trả về một kết quả thành công.
+Rejected: Đã hoàn thành nhưng bị lỗi.
+///////////////////////////////////////
+- npm i @types/bcryptjs tuc la dinh nghia kieu TS cho thu vien JS
+- Ma hoa mat khau truoc khi luu: bcryptjs, jsonwebtoken
+- jwt la token tam thoi xac dinh nguoi dung trong moi session dang nhap
+- app.use("/api/users", userRoutes)
+- kiem tra cac truogn thong tin dang ky express-validator
+5.2: Dang nhap api
+5.3 Xay dung giao dien dang ky dang nhap
+- Dang ky: su dung: npm i react-hook-form
+- cai dat thu vien react-query de truy van den server
+- Appcontext va Toast Notificatons
++ AppContext dung de chia se du lieu chung giua cac component ma k can truyen props
+
+5.3.1 Kiem tra USer login state
+
+
+
