@@ -1,136 +1,60 @@
-//import { useState } from 'react'
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom"
-import Layout from './layouts/Layout'
-import Register from './pages/Register'
-import SignIn from './pages/SignIn'
-import AddHotel from "./pages/AddHotel";
-import { useAppContext } from "./contexts/AppContext";
-import MyHotels from "./pages/MyHotels";
-import EditHotel from "./pages/EditHotel";
-import Search from "./pages/Search";
-import Detail from "./pages/Detail";
-import Booking from "./pages/Booking";
-import Home from "./pages/Home";
-import MyBookings from "./pages/MyBookings";
-import AdminPage from './pages/Admin';
+import React, { useContext, useState } from "react";
+import Toast from "../components/Toast";
+import { useQuery } from "react-query";
+import * as apiClient from "../api-client";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
 
+const STRIPE_PUB_KEY = import.meta.env.VITE_STRIPE_PUB_KEY || "";
 
-
-const App = () => {
-  const { isLoggedIn, role } = useAppContext();
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={
-          <Layout>
-            <Home/>
-          </Layout>
-        } />
-
-        <Route
-          path="/search"
-          element={
-            <Layout>
-              <Search />
-            </Layout>
-          } />
-
-        <Route
-          path="/detail/:hotelId"
-          element={
-            <Layout>
-              <Detail />
-            </Layout>
-          }
-        />
-
-        <Route path="/sign-in"
-          element={
-            <Layout>
-              <SignIn />
-            </Layout>
-          } />
-
-        <Route path="/register" element={
-          <Layout>
-            <Register />
-          </Layout>
-        } />
-
-        {isLoggedIn && (
-          <>
-            {role === "user" && (
-              <>
-              <Route
-                path="/hotel/:hotelId/booking" 
-                element={
-                  <Layout>
-                    <Booking />
-                  </Layout>
-                } />
-              <Route
-                path="/my-bookings"
-                element={
-                  <Layout>
-                    <MyBookings />
-                  </Layout>
-                }/>
-              </>
-            )}
-
-            {role === "host" && (
-              <>
-              {/* <Route
-                path="/hotel/:hotelId/booking" 
-                element={
-                  <Layout>
-                    <Booking />
-                  </Layout>
-                } /> */}
-            
-              <Route
-                path="/add-hotel" element={
-                  <Layout>
-                    <AddHotel />
-                  </Layout>
-                } />
-            
-              <Route
-                path="/my-hotels" element={
-                  <Layout>
-                    <MyHotels />
-                  </Layout>
-                } />
-              <Route
-                path="/edit-hotel/:hotelId"
-                element={
-                  <Layout>
-                    <EditHotel />
-                  </Layout>
-                }
-              />
-              {/* <Route
-                path="/my-bookings"
-                element={
-                  <Layout>
-                    <MyBookings />
-                  </Layout>
-                }/> */}
-              </>
-            )}
-            {(role === 'admin' || role === "guest") && (   
-              <>           
-                <Route path="/admin" element={
-                  <AdminPage/>
-                } />
-              </>
-            )}
-          </>
-        )}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
-  )
+type ToastMessage = {
+    message: string;
+    type: "SUCCESS" | "ERROR";
 }
 
-export default App
+type AppContext = {
+    showToast: (toastMessage: ToastMessage) => void;
+    isLoggedIn: boolean;
+    role: string;
+    name: string;
+    stripePromise: Promise<Stripe | null>;
+}
+
+const AppContext = React.createContext<AppContext | undefined>(undefined);
+
+const stripePromise = loadStripe(STRIPE_PUB_KEY);
+
+export const AppContextProvider = ({
+    children,
+}: { 
+    children: React.ReactNode;
+}) => { 
+    const [toast, setToast] = useState<ToastMessage | undefined>(undefined)
+    const { data, isError } = useQuery("validateToken", apiClient.validateToken, {
+        retry: false,
+      });   
+        return (
+            <AppContext.Provider 
+                value={{
+                    showToast: (toastMessage) => {
+                        setToast(toastMessage);
+                    },
+                    isLoggedIn: !isError, 
+                    role: data?.role || "guest",
+                    stripePromise,
+                    name: data?.name || "User",
+            }}>
+                {toast && (
+                    <Toast 
+                        message={toast.message} 
+                        type = {toast.type} 
+                        onClose={()=>setToast(undefined)}/>)}
+                {children}
+            </AppContext.Provider>
+        )
+};
+
+export const useAppContext = () =>{
+    const context = useContext(AppContext);
+    return context as AppContext;
+};
+

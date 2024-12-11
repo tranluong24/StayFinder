@@ -120,7 +120,8 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 
                 <div className="bg-blue-200 p-4 rounded-md">
                     <div className="font-semibold text-lg">
-                    Tổng chi phí: {paymentIntent.totalCost.toFixed(2)}VNĐ
+                    Tổng chi phí: {(Math.round(paymentIntent.totalCost * 32395 / 1000) * 1000).toLocaleString('vi-VN')} VNĐ
+                    
                     </div>
                     <div className="text-xs">Bao gồm thuế và phí</div>
                 </div>
