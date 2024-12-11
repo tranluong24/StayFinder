@@ -5,7 +5,6 @@ import { useAppContext } from "../../contexts/AppContext";
 import { useLocation, useNavigate} from "react-router-dom";
 import * as apiClient from "../../api-client";
 import { useQuery } from "react-query"
-import { MdCalendarToday } from "react-icons/md";
 
 type Props = {
   hotelId: string;

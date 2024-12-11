@@ -39,9 +39,6 @@ const HomePage: React.FC = () => {
     { img: "https://cf.bstatic.com/xdata/images/city/600x600/688866.jpg?k=fc9d2cb9fe2f6d1160e10542cd2b83f5a8008401d33e8750ee3c2691cf4d4f7e&o=", title: "Hội An", isLarge: false },
   ];
 
-  const getVisibleCards = (cards: any[], startIndex: number, maxVisible: number) => {
-    return cards.slice(startIndex, startIndex + maxVisible);
-  };
 
   const scrollCards = (setScrollIndex: React.Dispatch<React.SetStateAction<number>>, maxIndex: number, direction: number) => {
     setScrollIndex((prev) => Math.min(Math.max(prev + direction, 0), maxIndex));
