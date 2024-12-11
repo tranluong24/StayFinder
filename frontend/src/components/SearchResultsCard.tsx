@@ -1,7 +1,6 @@
-import { AiFillHeart, AiFillStar, AiOutlineEnvironment, AiOutlineHeart } from "react-icons/ai"
+import { AiFillStar, AiOutlineEnvironment } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import { HotelType } from "../../../backend/src/shared/types"
-import { useState } from "react"
 
 type Props = {
     hotel: HotelType
@@ -9,10 +8,10 @@ type Props = {
 
 const SearchResultsCard = ({hotel}: Props) => {
 
-    const [isFavorited, setIsFavorited] = useState(false);
-    const toggleFavorite = () => {
-        setIsFavorited(!isFavorited);
-    };
+    // const [isFavorited, setIsFavorited] = useState(false);
+    // const toggleFavorite = () => {
+    //     setIsFavorited(!isFavorited);
+    // };
     return (
         <div className="grid grid-cols-1 xl:grid-cols-[2fr_3fr] border border-slate-300 rounded-lg p-8 gap-8">
             <div className="w-full h-[300px]">
