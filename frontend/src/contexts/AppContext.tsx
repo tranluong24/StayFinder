@@ -15,6 +15,7 @@ type AppContext = {
     showToast: (toastMessage: ToastMessage) => void;
     isLoggedIn: boolean;
     role: string;
+    name: string;
     stripePromise: Promise<Stripe | null>;
 }
 
@@ -40,6 +41,7 @@ export const AppContextProvider = ({
                     isLoggedIn: !isError, 
                     role: data?.role || "guest",
                     stripePromise,
+                    name: data?.name || "User",
             }}>
                 {toast && (
                     <Toast 

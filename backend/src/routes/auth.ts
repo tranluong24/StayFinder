@@ -72,6 +72,7 @@ router.get("/validate-token", verifyToken, async (req: Request, res: Response)=>
         res.status(200).send({
             userId: userId,
             role:user.role,
+            name: user.lastName
         })
     }
 })

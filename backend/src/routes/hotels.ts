@@ -92,8 +92,7 @@ router.post("/:hotelId/bookings/payment-intent", verifyToken, async(req: Request
     if(!hotel){
         res.status(400).json({message:"Hotel not found"})
     }else{
-        const totalCost = hotel.pricePerNight * numberOfNights
-
+        const totalCost = parseFloat((hotel.pricePerNight * 0.000031).toFixed(2)) * numberOfNights
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalCost * 100,
             currency: "gbp",//dvi tien te: 
