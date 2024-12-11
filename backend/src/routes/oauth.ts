@@ -101,7 +101,7 @@ router.get("/google/callback", async (req: Request, res: Response) => {
           secure: process.env.NODE_ENT === "production",
           maxAge: 86400000,
         });    
-        res.redirect("http://localhost:5173/");
+        res.redirect("https://your-frontend.onrender.com");
     }
 });
 
