@@ -7,7 +7,7 @@ const router = express.Router();
 
 const GOOGLE_OAUTH_URL = process.env.GOOGLE_OAUTH_URL;
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
-const GOOGLE_CALLBACK_URL = "https%3A//nhom-32-web.onrender.com//api/google/callback";
+const GOOGLE_CALLBACK_URL = "https%3A//nhom-32-web.onrender.com/api/google/callback";
 const GOOGLE_OAUTH_SCOPES = [
   "https%3A//www.googleapis.com/auth/userinfo.email",
 
