@@ -112,7 +112,7 @@ router.put("/:id", async(req: Request, res: Response) =>{
             {new: true}
         )
 
-        console.log(req.body)
+        // console.log(req.body)
 
         if(!user){
             res.status(404).json("user not found")
